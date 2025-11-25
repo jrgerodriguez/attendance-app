@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/app/lib/supabase/client";
 import { LogIn, LogOut, Hamburger, Coffee   } from "lucide-react";
+import Cronometro from "./Cronometro";
 
 export default function AttendanceButtons({ userId }) {
   const [entradaMarcada, setEntradaMarcada] = useState(false);
@@ -62,31 +63,23 @@ const getLocalDateTime = () => {
 
       if (error || !lastEvent) {
         setEntradaMarcada(false);
+        setLunchActivo(false);
+        setBreakActivo(false);
         return;
       }
 
-      if (lastEvent.event_type === "clock_in") {
-        setEntradaMarcada(true);
-      } else {
-        setEntradaMarcada(false); 
-      }
+      // Entrada se considera activa mientras no sea clock_out
+      const entradaActiva = lastEvent.event_type !== "clock_out";
+      setEntradaMarcada(entradaActiva);
 
-      if (lastEvent.event_type === "lunch_in") {
-        setLunchActivo(true);
-        setEntradaMarcada(true); 
-      } else {
-        setLunchActivo(false);
-      }
+      // Lunch activo si el último evento fue lunch_in
+      setLunchActivo(lastEvent.event_type === "lunch_in");
 
-      if (lastEvent.event_type === "break_in") {
-        setBreakActivo(true);
-        setEntradaMarcada(true); 
-      } else {
-        setBreakActivo(false);
-      }
+      // Break activo si el último evento fue break_in
+      setBreakActivo(lastEvent.event_type === "break_in");
     };
 
-    checkEstado();
+      checkEstado();
   }, [userId]);
 
   // ------------------ ENTRADA ------------------
@@ -250,6 +243,7 @@ const toggleLunch = async () => {
     } else {
       showMessage("Lunch finalizado 🍽️");
       setLunchActivo(false);
+      setEntradaMarcada(true);
     }
   }
 
@@ -337,6 +331,7 @@ const toggleLunch = async () => {
         } else {
           showMessage("🧑‍💻 Break Finalizado")
           setBreakActivo(false)
+          setEntradaMarcada(true);
         }
       }
 
@@ -384,6 +379,8 @@ const toggleLunch = async () => {
         <Coffee  className="w-5 h-5" />
         {loadingBreak ? "Marcando..." : breakActivo ? "End Break" : "Break"}
       </button>
+
+      <Cronometro userId={userId} lunchActivo={lunchActivo} breakActivo={breakActivo}/>
 
       {message && (
         <p className="text-center text-sm px-4 py-3 rounded-xl border border-green-300 bg-green-100 w-full animate-fade-in text-green-700">
