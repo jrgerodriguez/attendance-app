@@ -47,19 +47,29 @@ export default function ResumenActividades({ userId }) {
 
 const formatTime = (isoString) => {
   if (!isoString || typeof isoString !== "string") return "Pendiente";
+
+  // Limpia el string
   let clean = isoString
     .replace("+00:00", "")
-    .replace("Z", "");
+    .replace("Z", "")
+    .split(".")[0];
 
-  clean = clean.split(".")[0];
-
-
+  // Si trae fecha, solo agarramos la hora
   if (clean.includes("T")) {
     clean = clean.split("T")[1];
   }
 
-  return clean; 
+  // Ahora convertimos a 12 horas
+  const [hour, minute, second] = clean.split(":");
+  let h = parseInt(hour, 10);
+  const ampm = h >= 12 ? "PM" : "AM";
+
+  h = h % 12;
+  if (h === 0) h = 12;
+
+  return `${h}:${minute}:${second} ${ampm}`;
 };
+
 
   const getIcon = (type) => {
     switch (type) {
