@@ -180,7 +180,7 @@ const toggleLunch = async () => {
     .single();
 
   if (lastErr) {
-    showMessage("Error verificando estado actual.");
+    showMessage("No has marcado una entrada o un error ha ocurrido.");
     setLoadingLunch(false);
     return;
   }
@@ -268,8 +268,8 @@ const toggleLunch = async () => {
       .single();
 
     if (lastErr) {
-      showMessage("Error verificando estado actual.");
-      setLoadingLunch(false);
+      showMessage("No has marcado una entrada o un error ha ocurrido.");
+      setLoadingBreak(false);
       return;
     }
 
