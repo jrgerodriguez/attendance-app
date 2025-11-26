@@ -355,7 +355,7 @@ const toggleLunch = async () => {
 
       <button
         onClick={marcarSalida}
-        disabled={loadingSalida || !entradaMarcada}
+        disabled={loadingSalida || !entradaMarcada || breakActivo || lunchActivo}
         className="cursor-pointer w-full flex items-center justify-center gap-2 bg-red-600 text-white px-5 py-3 rounded-xl shadow-md transition-all duration-200 transform hover:bg-red-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <LogOut className="w-5 h-5" />
@@ -364,7 +364,7 @@ const toggleLunch = async () => {
 
       <button
         onClick={toggleLunch}
-        disabled={loadingLunch || !entradaMarcada}
+        disabled={loadingLunch || !entradaMarcada || breakActivo}
         className="cursor-pointer w-full flex items-center justify-center gap-2 bg-yellow-600 text-white px-5 py-3 rounded-xl shadow-md transition-all duration-200 transform hover:bg-yellow-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <Hamburger className="w-5 h-5" />
@@ -373,7 +373,7 @@ const toggleLunch = async () => {
 
       <button
         onClick={toggleBreak}
-        disabled={loadingBreak || !entradaMarcada}
+        disabled={loadingBreak || !entradaMarcada || lunchActivo}
         className="cursor-pointer w-full flex items-center justify-center gap-2 bg-blue-600 text-white px-5 py-3 rounded-xl shadow-md transition-all duration-200 transform hover:bg-blue-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <Coffee  className="w-5 h-5" />
