@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { checkEmail } from "./lib/auth/checkEmail";
+import Image from "next/image";
 
 export default function Login() {
 
@@ -41,6 +42,13 @@ export default function Login() {
     <div className="min-h-screen flex flex-col items-center justify-between bg-gray-100 py-6">
       <main className="w-full max-w-md flex-1 flex items-center">
         <div className="bg-white shadow-xl rounded-2xl p-10 space-y-6 font-sans w-full">
+        <Image 
+          src="/images/logo.png"
+          alt="Mi imagen"
+          width={500}
+          height={400}
+          className="rounded-2xl"
+        />
           <h2 className="text-2xl font-bold text-gray-900 text-center">
             Bienvenido
           </h2>
