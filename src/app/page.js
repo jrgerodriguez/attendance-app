@@ -22,6 +22,12 @@ export default function Login() {
   const handleLogin = async () => {
     setLoading(true)
 
+    if(!email) {
+      showMessage("Ingresa tu correo electrónico."); 
+      setLoading(false)
+      return
+    }
+
     const user = await checkEmail(email);
 
     if(!user) {
